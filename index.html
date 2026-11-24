@@ -1,0 +1,1855 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
+<title>CardioSense | Heart Failure Research System Bulde By M.Adeeb Ali Full Stack Developer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg:#0b1220;
+    --surface:#111c2d;
+    --line:#24334a;
+    --text:#edf3fc;
+    --muted:#8c9bb2;
+    --blue:#6ba7ff;
+    --cyan:#55d6cf;
+    --shadow:0 18px 50px #02071155;
+}
+
+* {
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html {
+    scroll-behavior:smooth;
+}
+
+body {
+    background:var(--bg);
+    color:var(--text);
+    font-family:"DM Sans",sans-serif;
+    font-size:14px;
+    line-height:1.5;
+}
+
+button,input,select {
+    font:inherit;
+}
+
+button,a {
+    -webkit-tap-highlight-color:transparent;
+}
+
+a {
+    color:inherit;
+    text-decoration:none;
+}
+
+button {
+    cursor:pointer;
+}
+
+.app-shell {
+    min-height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    position:fixed;
+    inset:0 auto 0 0;
+    width:248px;
+    padding:27px 18px 18px;
+    background:#0e1828;
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    z-index:10;
+    transition:transform .25s;
+}
+
+.brand {
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:0 8px 44px;
+}
+
+.brand-mark {
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#347fda,#41c7c0);
+    display:grid;
+    place-items:center;
+    font-size:25px;
+    color:white;
+}
+
+.brand strong {
+    display:block;
+    font:800 16px Manrope;
+}
+
+.brand small {
+    font-size:9px;
+    letter-spacing:1.7px;
+    color:var(--muted);
+}
+
+.workspace-label,.eyebrow {
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:1.65px;
+    color:#7f91ab;
+}
+
+.workspace-label {
+    padding:0 11px 12px;
+}
+
+.nav-list {
+    display:grid;
+    gap:6px;
+}
+
+.nav-link {
+    padding:11px 12px;
+    border-radius:9px;
+    color:#9eacc1;
+    font-size:13px;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    transition:.2s;
+}
+
+.nav-link:hover,.nav-link.active {
+    background:#1b2c45;
+    color:#eaf3ff;
+}
+
+.nav-link.active {
+    box-shadow:inset 2px 0 #69aaff;
+}
+
+.sidebar-bottom {
+    margin-top:auto;
+}
+
+.secure-card {
+    display:flex;
+    gap:11px;
+    padding:13px;
+    background:#14283a;
+    border:1px solid #244358;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.secure-card b,.profile b {
+    display:block;
+    font-size:11px;
+}
+
+.secure-card small,.profile small {
+    display:block;
+    font-size:10px;
+    color:var(--muted);
+    margin-top:2px;
+}
+
+.profile {
+    border-top:1px solid var(--line);
+    padding:17px 4px 0;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar {
+    width:31px;
+    height:31px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:#273e60;
+    color:#bcd7ff;
+    font-size:10px;
+    font-weight:700;
+}
+
+/* MAIN */
+
+.main-content {
+    margin-left:248px;
+    max-width:1700px;
+    padding:0 42px 25px;
+}
+
+.topbar {
+    height:70px;
+    border-bottom:1px solid #1d2a3e;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.breadcrumb {
+    font-size:12px;
+    color:var(--muted);
+}
+
+.breadcrumb span {
+    padding:0 9px;
+}
+
+.breadcrumb b {
+    color:#dce7f7;
+}
+
+.topbar-right {
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:var(--muted);
+    font-size:11px;
+}
+
+.status-dot,.connection-indicator {
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#e7ad5d;
+    box-shadow:0 0 0 4px #e7ad5d18;
+}
+
+.icon-button {
+    width:33px;
+    height:33px;
+    border:1px solid var(--line);
+    background:#142035;
+    color:#b6c5d9;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.menu-button {
+    display:none;
+}
+
+.page-heading {
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    padding:38px 0 25px;
+    gap:20px;
+}
+
+.page-heading h1 {
+    font:800 clamp(27px,3vw,39px) Manrope;
+    letter-spacing:-1.5px;
+    margin:7px 0;
+}
+
+.page-heading h1 span {
+    color:#72aaff;
+}
+
+.page-heading p,.panel-heading p {
+    margin:0;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.primary-button,.secondary-button,.outline-button {
+    border:0;
+    border-radius:8px;
+    padding:11px 16px;
+    font-size:12px;
+    font-weight:700;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    transition:.2s;
+}
+
+.primary-button {
+    background:linear-gradient(110deg,#3987e7,#4e9de9);
+    color:white;
+    box-shadow:0 7px 20px #3987e733;
+}
+
+.primary-button:hover {
+    filter:brightness(1.1);
+    transform:translateY(-1px);
+}
+
+.secondary-button {
+    background:#202d41;
+    color:#b8c6d8;
+    border:1px solid #34435a;
+}
+
+/* NOTICE */
+
+.notice {
+    display:flex;
+    gap:13px;
+    padding:13px 15px;
+    border:1px solid #72552e;
+    background:#2b241b;
+    border-radius:9px;
+    color:#f4d6a5;
+    position:relative;
+}
+
+.notice b {
+    font-size:11px;
+}
+
+.notice p {
+    font-size:10px;
+    color:#c5ad89;
+    margin:2px 25px 0 0;
+}
+
+.notice-close {
+    position:absolute;
+    right:12px;
+    top:10px;
+    background:none;
+    border:0;
+    color:#c5ad89;
+    font-size:19px;
+}
+
+/* METRICS */
+
+.metric-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin:19px 0;
+}
+
+.metric-card,.panel {
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:11px;
+    box-shadow:var(--shadow);
+}
+
+.metric-card {
+    padding:17px 18px;
+}
+
+.metric-top {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#8292aa;
+    font-size:9px;
+    letter-spacing:1.2px;
+    font-weight:700;
+}
+
+.metric-icon {
+    width:29px;
+    height:29px;
+    border-radius:8px;
+    display:grid;
+    place-items:center;
+}
+
+.blue {color:var(--blue);background:#25436b66}
+.violet {color:#ad91ff;background:#44336c66}
+.teal {color:var(--cyan);background:#1d5a5866}
+
+.metric-value {
+    font:800 28px Manrope;
+    margin:10px 0 8px;
+}
+
+.metric-text {
+    font-size:20px;
+}
+
+.metric-foot {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:9px;
+    color:#62728b;
+}
+
+.neutral-pill {
+    background:#253248;
+    color:#aabbd2;
+    border-radius:20px;
+    padding:4px 8px;
+}
+
+/* CONTENT */
+
+.content-grid {
+    display:grid;
+    grid-template-columns:minmax(0,1.65fr) minmax(265px,.85fr);
+    gap:16px;
+}
+
+.panel {
+    padding:21px;
+}
+
+.panel-heading {
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:22px;
+}
+
+.panel-heading h2 {
+    font:700 17px Manrope;
+    margin:4px 0;
+}
+
+.step-badge {
+    color:#8fbaff;
+    border:1px solid #31527c;
+    border-radius:5px;
+    padding:5px 7px;
+    font-size:9px;
+}
+
+.form-section-title {
+    display:flex;
+    align-items:center;
+    gap:11px;
+    margin-bottom:15px;
+}
+
+.form-section-title>span {
+    width:27px;
+    height:27px;
+    border:1px solid #355477;
+    color:#8dbbfa;
+    border-radius:8px;
+    display:grid;
+    place-items:center;
+    font-size:10px;
+}
+
+.form-section-title b {
+    display:block;
+    font-size:12px;
+}
+
+.form-section-title small {
+    display:block;
+    color:var(--muted);
+    font-size:10px;
+}
+
+.field-grid {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+}
+
+.three-col {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.field {
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    min-width:0;
+}
+
+.field>span {
+    font-size:10px;
+    color:#c5d1e1;
+    font-weight:600;
+}
+
+.field input,.field select {
+    width:100%;
+    height:38px;
+    background:#0d1727;
+    border:1px solid #2a3a51;
+    border-radius:7px;
+    padding:0 10px;
+    color:#e3ecf8;
+    outline:none;
+    font-size:11px;
+}
+
+.field input:focus,.field select:focus {
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px #6ba7ff1a;
+}
+
+.form-divider {
+    height:1px;
+    background:var(--line);
+    margin:21px 0;
+}
+
+.check-grid {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+    margin-top:19px;
+}
+
+.check-field {
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:10px;
+    border:1px solid var(--line);
+    background:#0e1929;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.check-field input {
+    accent-color:#5b9df2;
+}
+
+.check-field b {
+    font-size:10px;
+}
+
+.form-actions {
+    display:flex;
+    justify-content:flex-end;
+    gap:9px;
+    margin-top:20px;
+}
+
+.form-feedback {
+    min-height:15px;
+    text-align:right;
+    color:var(--cyan);
+    font-size:10px;
+    margin-top:9px;
+}
+
+/* RIGHT SIDE */
+
+.right-column {
+    display:grid;
+    align-content:start;
+    gap:16px;
+}
+
+.compact {
+    margin-bottom:12px;
+    align-items:center;
+}
+
+.compact h2 {
+    font-size:15px;
+}
+
+.model-visual {
+    height:148px;
+    position:relative;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+    background:radial-gradient(ellipse,#1c4261,#14253a 65%,#111c2d);
+    border-radius:9px;
+}
+
+.orbit {
+    position:absolute;
+    border:1px solid #3d7190;
+    border-radius:50%;
+    transform:rotate(-22deg);
+}
+
+.orbit-one {
+    width:155px;
+    height:77px;
+}
+
+.orbit-two {
+    width:205px;
+    height:105px;
+    transform:rotate(32deg);
+}
+
+.heart-symbol {
+    font-size:53px;
+    color:#71c9d2;
+    z-index:1;
+}
+
+.orbit-dot {
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#75baff;
+}
+
+.dot-one {top:27px;left:31%}
+.dot-two {bottom:27px;right:28%;background:#9c8bff}
+.dot-three {top:46px;right:24%;background:#63d3c4}
+
+.model-state {
+    text-align:center;
+    padding:15px 0;
+}
+
+.state-chip {
+    color:#edc48c;
+    background:#463821;
+    border-radius:20px;
+    padding:4px 8px;
+    font-size:8px;
+}
+
+.model-state h3 {
+    font:700 13px Manrope;
+    margin:10px 0 4px;
+}
+
+.model-state p {
+    font-size:10px;
+    color:var(--muted);
+}
+
+.outline-button {
+    width:100%;
+    background:transparent;
+    color:#9fc5fa;
+    border:1px solid #34577d;
+}
+
+.checklist {
+    list-style:none;
+    display:grid;
+    gap:14px;
+}
+
+.checklist li {
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+}
+
+.checklist b {
+    font-size:10px;
+}
+
+.checklist small {
+    font-size:9px;
+    color:var(--muted);
+    display:block;
+}
+
+.check-done,.check-pending {
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    flex:none;
+    font-size:10px;
+}
+
+.check-done {
+    background:#1b514c;
+    color:#68d8c9;
+}
+
+.check-pending {
+    border:1px solid #6e7d92;
+}
+
+/* RECORDS */
+
+.records-panel {
+    margin-top:17px;
+}
+
+.text-button {
+    background:none;
+    border:0;
+    color:#8ebcff;
+    font-size:10px;
+    font-weight:700;
+}
+
+.table-wrap {
+    overflow-x:auto;
+}
+
+table {
+    width:100%;
+    border-collapse:collapse;
+    white-space:nowrap;
+}
+
+th {
+    text-align:left;
+    font-size:8px;
+    letter-spacing:1px;
+    color:#788aa3;
+    padding:10px 12px;
+    border-bottom:1px solid var(--line);
+}
+
+td {
+    padding:12px;
+    font-size:10px;
+    color:#c5d1e0;
+    border-bottom:1px solid #1d2b40;
+}
+
+.study-id {
+    color:#8dbbfa;
+    font-weight:700;
+}
+
+.status-saved {
+    color:#70d2bf;
+    background:#1c4b45;
+    padding:4px 8px;
+    border-radius:15px;
+    font-size:9px;
+}
+
+.empty-state {
+    padding:26px;
+    display:grid;
+    justify-items:center;
+    color:#7f91a8;
+}
+
+.empty-state b {
+    font-size:11px;
+    color:#b9c7d8;
+}
+
+/* ABOUT */
+
+.about-strip {
+    margin:17px 0;
+    padding:23px;
+    border:1px solid #29435c;
+    background:linear-gradient(110deg,#14273a,#142034);
+    border-radius:11px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:25px;
+}
+
+.about-strip h2 {
+    font:700 17px Manrope;
+    margin:6px 0;
+}
+
+.about-strip p {
+    font-size:10px;
+    color:var(--muted);
+    max-width:600px;
+}
+
+.about-tags {
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.about-tags span {
+    border:1px solid #3b536f;
+    color:#a9c4e3;
+    border-radius:5px;
+    padding:6px 8px;
+    font-size:9px;
+}
+
+footer {
+    display:flex;
+    justify-content:space-between;
+    color:#5e6e84;
+    font-size:9px;
+    padding-top:7px;
+}
+
+/* MODAL */
+
+.modal {
+    width:min(510px,calc(100% - 30px));
+    background:#121f31;
+    color:var(--text);
+    border:1px solid #354862;
+    border-radius:13px;
+    padding:23px;
+    margin:auto;
+    box-shadow:0 25px 90px #000a;
+}
+
+.modal::backdrop {
+    background:#030914bb;
+    backdrop-filter:blur(4px);
+}
+
+.modal-head {
+    display:flex;
+    justify-content:space-between;
+}
+
+.modal-head h2 {
+    font:700 19px Manrope;
+    margin:5px 0;
+}
+
+.modal-intro {
+    font-size:11px;
+    color:var(--muted);
+    margin:15px 0;
+}
+
+.integration-list {
+    padding-left:20px;
+    display:grid;
+    gap:13px;
+}
+
+.integration-list li {
+    padding-left:4px;
+    font-size:11px;
+}
+
+.integration-list span {
+    display:block;
+    color:var(--muted);
+    font-size:10px;
+}
+
+.modal-done {
+    width:100%;
+    margin-top:20px;
+}
+
+.toast {
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    background:#1b3d3b;
+    border:1px solid #39776c;
+    color:#c6f3e9;
+    border-radius:8px;
+    padding:11px 15px;
+    font-size:11px;
+    opacity:0;
+    transform:translateY(8px);
+    pointer-events:none;
+    transition:.25s;
+    z-index:30;
+}
+
+.toast.show {
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* LIGHT THEME */
+
+body.light {
+    color-scheme:light;
+    --bg:#f2f5fa;
+    --surface:#fff;
+    --line:#dce4ef;
+    --text:#17263b;
+    --muted:#64748b;
+    --shadow:0 12px 35px #17304b0b;
+}
+
+body.light .sidebar {
+    background:#fff;
+}
+
+body.light .field input,
+body.light .field select,
+body.light .check-field {
+    background:#f8fafd;
+    color:#1c2d43;
+    border-color:#d8e1ed;
+}
+
+body.light .about-strip {
+    background:#eaf2fb;
+}
+
+body.light .icon-button {
+    background:#f4f7fb;
+    color:#465a74;
+}
+
+body.light .model-visual {
+    background:radial-gradient(ellipse,#d9edf7,#edf3fa);
+}
+
+body.light .heart-symbol {
+    color:#258d9a;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px) {
+    .main-content {
+        padding:0 25px 22px;
+    }
+
+    .sidebar {
+        width:220px;
+    }
+
+    .main-content {
+        margin-left:220px;
+    }
+
+    .content-grid {
+        grid-template-columns:minmax(0,1.4fr) minmax(245px,.8fr);
+    }
+
+    .three-col {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:800px) {
+    .sidebar {
+        transform:translateX(-100%);
+        width:250px;
+    }
+
+    .sidebar.open {
+        transform:translateX(0);
+    }
+
+    .main-content {
+        margin-left:0;
+        padding:0 20px 20px;
+    }
+
+    .menu-button {
+        display:block;
+        margin-right:12px;
+    }
+
+    .topbar {
+        justify-content:flex-start;
+    }
+
+    .breadcrumb {
+        flex:1;
+    }
+
+    .content-grid {
+        grid-template-columns:1fr;
+    }
+
+    .right-column {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:580px) {
+    .main-content {
+        padding:0 13px 18px;
+    }
+
+    .page-heading {
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .page-heading .primary-button {
+        width:100%;
+    }
+
+    .metric-grid {
+        grid-template-columns:1fr;
+    }
+
+    .field-grid,.three-col {
+        grid-template-columns:1fr;
+    }
+
+    .right-column {
+        grid-template-columns:1fr;
+    }
+
+    .about-strip {
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    footer {
+        gap:10px;
+        flex-direction:column;
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    *,*::before,*::after {
+        scroll-behavior:auto!important;
+        transition:none!important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-shell">
+
+<aside class="sidebar" id="sidebar">
+
+    <a href="#" class="brand">
+        <span class="brand-mark">♡</span>
+        <span>
+            <strong>CardioSense</strong>
+            <small>RESEARCH STUDIO</small>
+        </span>
+    </a>
+
+    <div class="workspace-label">WORKSPACE</div>
+
+    <nav class="nav-list">
+        <a href="#overview" class="nav-link active">◫ Overview</a>
+        <a href="#assessment" class="nav-link">＋ New Assessment</a>
+        <a href="#records" class="nav-link">▤ Assessment Log</a>
+        <a href="#about" class="nav-link">ⓘ About Project</a>
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <div class="secure-card">
+            <span>◇</span>
+            <div>
+                <b>Privacy-first demo</b>
+                <small>Browser session only</small>
+            </div>
+        </div>
+
+        <div class="profile">
+            <div class="avatar">CS</div>
+            <div>
+                <b>Research Workspace</b>
+                <small>Prototype Environment</small>
+            </div>
+        </div>
+
+    </div>
+
+</aside>
+
+<main class="main-content" id="overview">
+
+<header class="topbar">
+
+    <button class="icon-button menu-button" id="menuButton">☰</button>
+
+    <div class="breadcrumb">
+        Workspace <span>/</span> <b>Overview</b>
+    </div>
+
+    <div class="topbar-right">
+        <span class="status-dot"></span>
+        <span>Prototype Mode</span>
+        <button class="icon-button" id="themeButton">◐</button>
+    </div>
+
+</header>
+
+<section class="page-heading">
+
+    <div>
+        <div class="eyebrow">CARDIOVASCULAR RESEARCH PLATFORM</div>
+
+        <h1>Heart health, <span>in perspective Bulde By M.Adeeb Ali Full Stack Developer.</span></h1>
+
+        <p>
+            A structured workspace for cardiovascular data collection
+            and machine-learning research.
+        </p>
+    </div>
+
+    <a href="#assessment" class="primary-button">
+        ＋ Create Assessment
+    </a>
+
+</section>
+
+<div class="notice">
+
+    <span>!</span>
+
+    <div>
+        <b>Research prototype — not a medical device</b>
+        <p>
+            This system does not diagnose or predict heart failure.
+            It is an educational research interface only.
+        </p>
+    </div>
+
+    <button class="notice-close" aria-label="Dismiss notice">×</button>
+
+</div>
+
+<section class="metric-grid">
+
+    <article class="metric-card">
+        <div class="metric-top">
+            <span>ASSESSMENTS THIS SESSION</span>
+            <span class="metric-icon blue">▤</span>
+        </div>
+
+        <div class="metric-value" id="sessionCount">0</div>
+
+        <div class="metric-foot">
+            <span class="neutral-pill">Local session</span>
+            <span>Recorded in this tab</span>
+        </div>
+    </article>
+
+    <article class="metric-card">
+        <div class="metric-top">
+            <span>MODEL STATUS</span>
+            <span class="metric-icon violet">⌘</span>
+        </div>
+
+        <div class="metric-value metric-text">Not Connected</div>
+
+        <div class="metric-foot">
+            <span class="neutral-pill">Integration needed</span>
+            <span>Validated ML model</span>
+        </div>
+    </article>
+
+    <article class="metric-card">
+        <div class="metric-top">
+            <span>DATA COMPLETENESS</span>
+            <span class="metric-icon teal">◉</span>
+        </div>
+
+        <div class="metric-value metric-text">Structured</div>
+
+        <div class="metric-foot">
+            <span class="neutral-pill">Input validation</span>
+            <span>Research workflow</span>
+        </div>
+    </article>
+
+</section>
+
+<section class="content-grid">
+
+<article class="panel assessment-panel" id="assessment">
+
+    <div class="panel-heading">
+        <div>
+            <div class="eyebrow">DATA COLLECTION</div>
+            <h2>New Patient Assessment</h2>
+            <p>Enter de-identified sample data for interface testing.</p>
+        </div>
+
+        <span class="step-badge">STEP 01 / 02</span>
+    </div>
+
+    <form id="assessmentForm" novalidate>
+
+        <div class="form-section-title">
+            <span>01</span>
+            <div>
+                <b>Patient Profile</b>
+                <small>Use a study ID, not a real identity.</small>
+            </div>
+        </div>
+
+        <div class="field-grid">
+
+            <label class="field">
+                <span>Study ID *</span>
+                <input name="studyId" placeholder="HF-0001" maxlength="24" required>
+            </label>
+
+            <label class="field">
+                <span>Age (Years) *</span>
+                <input name="age" type="number" min="18" max="120" placeholder="58" required>
+            </label>
+
+            <label class="field">
+                <span>Sex (Dataset Field)</span>
+                <select name="sex">
+                    <option value="">Not specified</option>
+                    <option value="1">Male (1)</option>
+                    <option value="0">Female (0)</option>
+                </select>
+            </label>
+
+            <label class="field">
+                <span>Assessment Category</span>
+                <select name="followup">
+                    <option value="baseline">Baseline</option>
+                    <option value="followup">Follow-up</option>
+                    <option value="unknown">Unknown</option>
+                </select>
+            </label>
+
+        </div>
+
+        <div class="form-divider"></div>
+
+        <div class="form-section-title">
+            <span>02</span>
+            <div>
+                <b>Clinical Indicators</b>
+                <small>Research dataset parameters.</small>
+            </div>
+        </div>
+
+        <div class="field-grid three-col">
+
+            <label class="field">
+                <span>Creatinine Phosphokinase</span>
+                <input name="cpk" type="number" min="0" max="100000" placeholder="582">
+            </label>
+
+            <label class="field">
+                <span>Ejection Fraction (%)</span>
+                <input name="ejectionFraction" type="number" min="1" max="100" placeholder="38">
+            </label>
+
+            <label class="field">
+                <span>Platelets</span>
+                <input name="platelets" type="number" min="0" max="2000000" placeholder="265000">
+            </label>
+
+            <label class="field">
+                <span>Serum Creatinine</span>
+                <input name="serumCreatinine" type="number" min="0" max="100" step="0.01" placeholder="1.1">
+            </label>
+
+            <label class="field">
+                <span>Serum Sodium</span>
+                <input name="serumSodium" type="number" min="0" max="250" placeholder="137">
+            </label>
+
+            <label class="field">
+                <span>Time (Days)</span>
+                <input name="time" type="number" min="0" max="10000" placeholder="120">
+            </label>
+
+        </div>
+
+        <div class="check-grid">
+
+            <label class="check-field">
+                <input type="checkbox" name="anaemia">
+                <b>Anaemia</b>
+            </label>
+
+            <label class="check-field">
+                <input type="checkbox" name="diabetes">
+                <b>Diabetes</b>
+            </label>
+
+            <label class="check-field">
+                <input type="checkbox" name="highBloodPressure">
+                <b>High Blood Pressure</b>
+            </label>
+
+            <label class="check-field">
+                <input type="checkbox" name="smoking">
+                <b>Smoking</b>
+            </label>
+
+        </div>
+
+        <div class="form-actions">
+
+            <button type="reset" class="secondary-button">
+                Clear Form
+            </button>
+
+            <button type="submit" class="primary-button">
+                Save Assessment →
+            </button>
+
+        </div>
+
+        <p id="formFeedback" class="form-feedback" role="status"></p>
+
+    </form>
+
+</article>
+
+<aside class="right-column">
+
+    <article class="panel model-panel">
+
+        <div class="panel-heading compact">
+            <div>
+                <div class="eyebrow">PREDICTION ENGINE</div>
+                <h2>Model Connection</h2>
+            </div>
+            <span class="connection-indicator"></span>
+        </div>
+
+        <div class="model-visual">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="heart-symbol">♡</div>
+            <span class="orbit-dot dot-one"></span>
+            <span class="orbit-dot dot-two"></span>
+            <span class="orbit-dot dot-three"></span>
+        </div>
+
+        <div class="model-state">
+            <span class="state-chip">NOT CONNECTED</span>
+            <h3>Awaiting Validated Model</h3>
+            <p>
+                A reviewed machine-learning model is required
+                before research predictions can be enabled.
+            </p>
+        </div>
+
+        <button class="outline-button" id="integrationInfo">
+            View Integration Checklist ↗
+        </button>
+
+    </article>
+
+    <article class="panel checklist-panel">
+
+        <div class="panel-heading compact">
+            <div>
+                <div class="eyebrow">PROJECT READINESS</div>
+                <h2>Before Deployment</h2>
+            </div>
+        </div>
+
+        <ul class="checklist">
+
+            <li>
+                <span class="check-done">✓</span>
+                <div>
+                    <b>Data Entry Interface</b>
+                    <small>Input labels and validation</small>
+                </div>
+            </li>
+
+            <li>
+                <span class="check-done">✓</span>
+                <div>
+                    <b>Assessment Log</b>
+                    <small>Session-only records</small>
+                </div>
+            </li>
+
+            <li>
+                <span class="check-pending">○</span>
+                <div>
+                    <b>Validated ML Model</b>
+                    <small>Clinical and external validation</small>
+                </div>
+            </li>
+
+            <li>
+                <span class="check-pending">○</span>
+                <div>
+                    <b>Security & Governance</b>
+                    <small>Privacy and access controls</small>
+                </div>
+            </li>
+
+        </ul>
+
+    </article>
+
+</aside>
+
+</section>
+
+<section class="panel records-panel" id="records">
+
+    <div class="panel-heading">
+        <div>
+            <div class="eyebrow">RECENT ACTIVITY</div>
+            <h2>Assessment Log</h2>
+            <p>Records are cleared when the page is refreshed.</p>
+        </div>
+
+        <button class="text-button" id="exportButton">
+            Export CSV ↓
+        </button>
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>STUDY ID</th>
+                    <th>AGE</th>
+                    <th>PROFILE</th>
+                    <th>INDICATORS</th>
+                    <th>CREATED</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+
+            <tbody id="recordsBody">
+                <tr class="empty-row">
+                    <td colspan="6">
+                        <div class="empty-state">
+                            <span>▤</span>
+                            <b>No Assessments Yet</b>
+                            <small>Saved entries will appear here.</small>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</section>
+
+<section class="about-strip" id="about">
+
+    <div>
+        <div class="eyebrow">ABOUT THE PROJECT</div>
+        <h2>Responsible AI Starts With Responsible Data.</h2>
+        <p>
+            CardioSense is an educational research interface
+            demonstrating structured cardiovascular data collection.
+        </p>
+    </div>
+
+    <div class="about-tags">
+        <span>HTML5</span>
+        <span>CSS3</span>
+        <span>JavaScript ES6+</span>
+        <span>Responsive UI</span>
+    </div>
+
+</section>
+
+<footer>
+    <span>© 2026 CardioSense Research Studio</span>
+    <span>Educational Prototype · Not for Clinical Use</span>
+</footer>
+
+</main>
+</div>
+
+<dialog class="modal" id="infoModal">
+
+    <div class="modal-head">
+        <div>
+            <div class="eyebrow">MODEL INTEGRATION</div>
+            <h2>What Is Needed Next?</h2>
+        </div>
+
+        <button class="icon-button" id="closeModal">×</button>
+    </div>
+
+    <p class="modal-intro">
+        A genuine prediction feature requires a trained and validated
+        machine-learning model, clinical review and secure infrastructure.
+    </p>
+
+    <ol class="integration-list">
+        <li>
+            <b>Dataset Preparation</b>
+            <span>Verify data provenance, quality and permitted use.</span>
+        </li>
+
+        <li>
+            <b>Model Training</b>
+            <span>Train and evaluate a reproducible ML pipeline.</span>
+        </li>
+
+        <li>
+            <b>Clinical Validation</b>
+            <span>Review calibration, performance, bias and limitations.</span>
+        </li>
+
+        <li>
+            <b>Backend Integration</b>
+            <span>Build an authenticated and secure API.</span>
+        </li>
+    </ol>
+
+    <button class="primary-button modal-done" id="modalDone">
+        Understood
+    </button>
+
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+"use strict";
+
+const $ = (selector, scope = document) =>
+    scope.querySelector(selector);
+
+const $$ = (selector, scope = document) =>
+    [...scope.querySelectorAll(selector)];
+
+const form = $("#assessmentForm");
+const recordsBody = $("#recordsBody");
+const sessionCount = $("#sessionCount");
+const feedback = $("#formFeedback");
+const toast = $("#toast");
+
+const records = [];
+
+const numericFields = [
+    "age",
+    "cpk",
+    "ejectionFraction",
+    "platelets",
+    "serumCreatinine",
+    "serumSodium",
+    "time"
+];
+
+function notify(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(() => {
+        toast.classList.remove("show");
+    }, 2600);
+}
+
+function getFormData() {
+
+    const data = Object.fromEntries(
+        new FormData(form).entries()
+    );
+
+    numericFields.forEach(key => {
+        data[key] =
+            data[key] === "" || data[key] === undefined
+                ? null
+                : Number(data[key]);
+    });
+
+    [
+        "anaemia",
+        "diabetes",
+        "highBloodPressure",
+        "smoking"
+    ].forEach(key => {
+        data[key] = form.elements.namedItem(key).checked;
+    });
+
+    return data;
+}
+
+function validate(data) {
+
+    const errors = [];
+
+    if (
+        !data.studyId ||
+        !/^[a-zA-Z0-9_-]{2,24}$/.test(data.studyId.trim())
+    ) {
+        errors.push("Enter a valid study ID.");
+    }
+
+    if (
+        !Number.isInteger(data.age) ||
+        data.age < 18 ||
+        data.age > 120
+    ) {
+        errors.push("Age must be between 18 and 120.");
+    }
+
+    const ranges = {
+        cpk: [0, 100000],
+        ejectionFraction: [1, 100],
+        platelets: [0, 2000000],
+        serumCreatinine: [0, 100],
+        serumSodium: [0, 250],
+        time: [0, 10000]
+    };
+
+    Object.entries(ranges).forEach(([key, [min, max]]) => {
+
+        const value = data[key];
+
+        if (
+            value !== null &&
+            (!Number.isFinite(value) || value < min || value > max)
+        ) {
+            errors.push(`${key} is outside the permitted input range.`);
+        }
+    });
+
+    return errors;
+}
+
+function renderRecords() {
+
+    sessionCount.textContent = records.length;
+
+    if (!records.length) {
+
+        recordsBody.innerHTML = `
+            <tr class="empty-row">
+                <td colspan="6">
+                    <div class="empty-state">
+                        <span>▤</span>
+                        <b>No Assessments Yet</b>
+                        <small>Saved entries will appear here.</small>
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    recordsBody.replaceChildren(
+        ...records.map(record => {
+
+            const row = document.createElement("tr");
+
+            const values = [
+                record.studyId,
+                record.age,
+                record.sex === "1"
+                    ? "Male"
+                    : record.sex === "0"
+                        ? "Female"
+                        : "Not specified",
+                [
+                    record.anaemia && "Anaemia",
+                    record.diabetes && "Diabetes",
+                    record.highBloodPressure && "High BP",
+                    record.smoking && "Smoking"
+                ].filter(Boolean).join(", ") || "—",
+                record.createdAt,
+                "Saved"
+            ];
+
+            values.forEach((value, index) => {
+
+                const cell = document.createElement("td");
+
+                cell.textContent = value;
+
+                if (index === 0) {
+                    cell.className = "study-id";
+                }
+
+                if (index === 5) {
+
+                    const status = document.createElement("span");
+
+                    status.className = "status-saved";
+                    status.textContent = value;
+
+                    cell.replaceChildren(status);
+                }
+
+                row.append(cell);
+            });
+
+            return row;
+        })
+    );
+}
+
+form.addEventListener("submit", event => {
+
+    event.preventDefault();
+
+    feedback.textContent = "";
+
+    const data = getFormData();
+    const errors = validate(data);
+
+    if (errors.length) {
+
+        feedback.textContent = errors[0];
+        feedback.style.color = "#ffb58c";
+
+        const field = form.elements.namedItem(
+            !data.studyId ? "studyId" : "age"
+        );
+
+        field.focus();
+
+        return;
+    }
+
+    data.studyId = data.studyId.trim();
+
+    data.createdAt = new Intl.DateTimeFormat(
+        undefined,
+        {
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    ).format(new Date());
+
+    records.unshift(data);
+
+    renderRecords();
+
+    form.reset();
+
+    feedback.style.color = "var(--cyan)";
+
+    feedback.textContent =
+        "Assessment saved. No clinical prediction generated.";
+
+    notify("Assessment saved successfully.");
+});
+
+form.addEventListener("reset", () => {
+    feedback.textContent = "";
+});
+
+$("#exportButton").addEventListener("click", () => {
+
+    if (!records.length) {
+        notify("No records available for export.");
+        return;
+    }
+
+    const columns = [
+        "studyId",
+        ...numericFields,
+        "sex",
+        "followup",
+        "anaemia",
+        "diabetes",
+        "highBloodPressure",
+        "smoking",
+        "createdAt"
+    ];
+
+    const escapeCSV = value =>
+        `"${String(value ?? "").replaceAll('"', '""')}"`;
+
+    const csv = [
+        columns.join(","),
+        ...records.map(record =>
+            columns
+                .map(column => escapeCSV(record[column]))
+                .join(",")
+        )
+    ].join("\r\n");
+
+    const blob = new Blob(
+        [csv],
+        { type: "text/csv;charset=utf-8;" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "cardiosense-assessments.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+    notify("CSV export prepared.");
+});
+
+const modal = $("#infoModal");
+
+$("#integrationInfo").addEventListener("click", () => {
+    modal.showModal();
+});
+
+$("#closeModal").addEventListener("click", () => {
+    modal.close();
+});
+
+$("#modalDone").addEventListener("click", () => {
+    modal.close();
+});
+
+modal.addEventListener("click", event => {
+
+    if (event.target === modal) {
+        modal.close();
+    }
+});
+
+$("#themeButton").addEventListener("click", () => {
+    document.body.classList.toggle("light");
+});
+
+$("#menuButton").addEventListener("click", () => {
+
+    const isOpen = $("#sidebar").classList.toggle("open");
+
+    $("#menuButton").setAttribute(
+        "aria-expanded",
+        String(isOpen)
+    );
+});
+
+$$(".nav-link").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        $("#sidebar").classList.remove("open");
+
+        $("#menuButton").setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        $$(".nav-link").forEach(item =>
+            item.classList.remove("active")
+        );
+
+        link.classList.add("active");
+    });
+});
+
+$(".notice-close").addEventListener("click", () => {
+    $(".notice").remove();
+});
+
+renderRecords();
+</script>
+
+</body>
+</html>
